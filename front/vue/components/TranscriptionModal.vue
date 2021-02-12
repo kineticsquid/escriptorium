@@ -7,7 +7,7 @@
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button v-if="readDirection == 'rtl'"
+                    <button v-if="$store.state.document.readDirection == 'rtl'"
                             type="button"
                             id="next-btn"
                             @click="$parent.editNext()"
@@ -24,7 +24,7 @@
                         <i class="fas fa-arrow-circle-left"></i>
                     </button>
 
-                    <button v-if="readDirection == 'rtl'"
+                    <button v-if="$store.state.document.readDirection == 'rtl'"
                             type="button"
                             id="prev-btn"
                             @click="$parent.editPrevious()"
@@ -51,7 +51,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div :class="'modal-body ' + defaultTextDirection">
+                <div :class="'modal-body ' + $store.state.document.defaultTextDirection">
                     <div id="modal-img-container" ref="modalImgContainer" width="80%">
                         <img id="line-img"
                                 v-bind:src="modalImgSrc"
@@ -162,7 +162,7 @@ import HelpVersions from './HelpVersions.vue';
 import HelpCompareTranscriptions from './HelpCompareTranscriptions.vue';
 
 export default Vue.extend({
-    props: ['readDirection', 'defaultTextDirection', 'line'],
+    props: ['line'],
     components: {
         LineVersion,
         HelpVersions,
@@ -344,7 +344,7 @@ export default Vue.extend({
             input.style.fontSize = fontSize+'px';
             input.style.height = Math.round(fontSize*1.1)+'px';
 
-            if (this.readDirection == 'rtl') {
+            if (this.$store.state.document.readDirection == 'rtl') {
                 container.style.marginRight = context+'px';
             } else {
                 // left to right

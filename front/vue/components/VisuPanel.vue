@@ -6,10 +6,9 @@
         </div>
         <div class="content-container">
             <div id="visu-zoom-container" class="content">
-                <svg :class="'w-100 ' + defaultTextDirection">
+                <svg :class="'w-100 ' + $store.state.document.defaultTextDirection">
                     <visuline v-for="line in $store.state.lines.all"
                                 ref="visulines"
-                                v-bind:text-direction="defaultTextDirection"
                                 v-bind:line="line"
                                 v-bind:ratio="ratio"
                                 v-bind:key="'VL' + line.pk">
@@ -19,9 +18,7 @@
         </div>
 
         <TranscriptionModal v-if="editLine"
-                            v-bind:line="editLine"
-                            v-bind:default-text-direction="defaultTextDirection"
-                            v-bind:read-direction="readDirection">
+                            v-bind:line="editLine">
         </TranscriptionModal>
     </div>
 </template>
@@ -36,7 +33,6 @@ import TranscriptionModal from './TranscriptionModal.vue';
 
 export default Vue.extend({
     mixins: [BasePanel],
-    props: ['readDirection', 'defaultTextDirection'],
     data() { return  {
       editLine: null
     };},
