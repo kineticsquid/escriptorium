@@ -161,7 +161,7 @@ export const actions = {
             commit('append', newLine)
         }
 
-        await dispatch('recalculateOrdering')
+        // await dispatch('recalculateOrdering')
         if (getters.hasMasks) {
             await dispatch('recalculateMasks', createdLines.map(l=>l.pk))
         }
@@ -226,7 +226,7 @@ export const actions = {
             }
         }
 
-        await dispatch('recalculateOrdering')
+        // await dispatch('recalculateOrdering')
 
         return { deletedPKs, deletedLines }
     },

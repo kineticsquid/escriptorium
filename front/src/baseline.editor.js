@@ -400,6 +400,7 @@ class SegmenterLine {
                       anchorPath.firstSegment.point :
                       anchorPath.lastSegment.point);
 
+        const ltr = anchorPath.firstSegment.point.x < anchorPath.lastSegment.point.x
         if (!this.orderDisplay) {
             // create it if it does not already exists
             this.createOrderDisplay(anchor);
@@ -408,10 +409,19 @@ class SegmenterLine {
             let region = this.orderDisplay.children[0],
                 circle = this.orderDisplay.children[1],
                 text = this.orderDisplay.children[2];
+
+            const offset = ltr ? -30 : 30;  // This seems to be reversed, but it works - and it's just a temporary patch so who cares
+
             circle.position = anchor;
+            circle.position.x += offset;
+
             text.position = anchor;
+            text.position.x += offset;
+            
             text.content = parseInt(this.order)+1;
             region.position = {x: anchor.x+5/this.segmenter.getRatio(), y: anchor.y};
+            region.position.x += offset;
+
             if (this.region) region.fillColor = this.region.color;
             else region.fillColor = 'transparent';
         }
