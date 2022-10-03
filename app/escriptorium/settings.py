@@ -15,7 +15,6 @@ import sys
 
 from django.utils.translation import gettext_lazy as _
 from kombu import Queue
-from kraken.kraken import SEGMENTATION_DEFAULT_MODEL
 from pkg_resources import get_distribution
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -108,7 +107,8 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'escriptorium.context_processors.enable_cookie_consent',
                 'escriptorium.context_processors.custom_homepage',
-                'escriptorium.context_processors.disable_search'
+                'escriptorium.context_processors.disable_search',
+                'escriptorium.context_processors.enable_text_alignment',
             ],
         },
     },
@@ -217,6 +217,7 @@ CELERY_TASK_QUEUES = (
     Queue('live', routing_key='live'),  # for everything that needs to be done on the spot to update the ui
     Queue('low-priority', routing_key='low-priority'),
     Queue('gpu', routing_key='gpu'),  # for everything that could use a GPU
+    Queue('jvm', routing_key='jvm'),  # for everything that needs a java virtual machine (excepts elasticsearch)
 )
 CELERY_TASK_DEFAULT_QUEUE = 'default'
 # When updating 'gpu' queue don't forget to add or remove the GPU quota check in the affected tasks
@@ -226,6 +227,7 @@ CELERY_TASK_ROUTES = {
     'core.tasks.generate_part_thumbnails': {'queue': 'low-priority'},
     'core.tasks.train': {'queue': 'gpu'},
     'core.tasks.segtrain': {'queue': 'gpu'},
+    'core.tasks.align': {'queue': 'jvm'},
     # 'escriptorium.celery.debug_task': '',
     'imports.tasks.*': {'queue': 'low-priority'},
     'users.tasks.async_email': {'queue': 'low-priority'},
@@ -387,7 +389,6 @@ IIIF_IMPORT_QUALITY = 'full'
 
 KRAKEN_TRAINING_DEVICE = os.getenv('KRAKEN_TRAINING_DEVICE', 'cpu')
 KRAKEN_TRAINING_LOAD_THREADS = int(os.getenv('KRAKEN_TRAINING_LOAD_THREADS', 0))
-KRAKEN_DEFAULT_SEGMENTATION_MODEL = SEGMENTATION_DEFAULT_MODEL
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
@@ -437,3 +438,6 @@ EXPORT_OPENITI_MARKDOWN_ENABLED = os.getenv('EXPORT_OPENITI_MARKDOWN', "False").
 
 # Boolean used to enable the OpenITI TEI XML export mode
 EXPORT_TEI_XML_ENABLED = os.getenv('EXPORT_TEI_XML', "False").lower() not in ("false", "0")
+
+# Boolean used to enable text alignment with Passim
+TEXT_ALIGNMENT_ENABLED = os.getenv('TEXT_ALIGNMENT', "False").lower() not in ("false", "0")

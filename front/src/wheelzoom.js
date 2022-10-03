@@ -30,6 +30,7 @@ class zoomTarget {
         domElement.style.transformOrigin = '0 0';
         domElement.style.transition = 'scale 0.3s';
         domElement.style.width = '100%'; // ITAY PATCH
+        domElement.style.display = 'block';
         domElement.classList.add('js-zoom-target');
         this.container = container;
         //this.rotationContainer = rotationContainer;
