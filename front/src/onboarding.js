@@ -6,7 +6,7 @@ const ONBOARDING_PAGE = 'onboarding_document_form';
 */
 export function bootOnboarding() {
     if (typeof ONBOARDING_PAGE !== 'undefined') {
-        var onboarding_page_done = userProfile.get(ONBOARDING_PAGE) || false;
+        var onboarding_page_done = true; // userProfile.get(ONBOARDING_PAGE) || false;
 
         if (!onboarding_page_done) {
             var intro = introJs().setOptions({'skipLabel': "Skip"});
@@ -132,7 +132,7 @@ export function bootOnboarding() {
             }
 
             document.addEventListener('DOMContentLoaded', function() {
-                intro.start();
+                // intro.start();
             });
         }
     }
