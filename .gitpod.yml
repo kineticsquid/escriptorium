@@ -2,22 +2,21 @@ ports:
 # Web UI (static resources)
 - port: 8080
   visibility: public
-  onOpen: ignore
+  onOpen: open-browser
 # Celery
 - port: 5555
   visibility: public
-  onOpen: ignore
+  onOpen: notify
 
 tasks:
 - init: |
     cp variables.env_example variables.env
     docker-compose pull
+- command: |
     docker-compose up -d 
 
 vscode:
   extensions:
-    - ms-python.vscode-pylance
     - ms-python.python
     - redhat.vscode-yaml
     - ms-azuretools.vscode-docker
-    - ms-vscode-remote.remote-containers
