@@ -1,0 +1,2 @@
+- Change secret key (do I really neeed to do this?)
+- Add domans to CSRF list, both 8080 and 5555?
