@@ -2,14 +2,18 @@ ports:
 # Web UI (static resources)
 - port: 8080
   visibility: public
-  onOpen: open-browser
+  onOpen: notify
 # Celery
 - port: 5555
   visibility: public
   onOpen: notify
 
 tasks:
+- before: |
+    git clone https://gitlab.com/scripta/escriptorium.git
+
 - init: |
+    git pull
     cp variables.env_example variables.env
     docker-compose pull
 - command: |
