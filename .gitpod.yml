@@ -15,7 +15,6 @@ tasks:
 
 - init: |
     git pull
-    cp variables.env_example variables.env
     docker-compose pull
 
 - command: |
