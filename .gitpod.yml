@@ -11,11 +11,13 @@ ports:
 tasks:
 - before: |
     git clone https://gitlab.com/scripta/escriptorium.git
+    python build_variables.env.py --ports "5555, 8080"
 
 - init: |
     git pull
     cp variables.env_example variables.env
     docker-compose pull
+
 - command: |
     docker-compose up -d 
 
