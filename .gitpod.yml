@@ -10,7 +10,6 @@ ports:
 
 tasks:
 - before: |
-    git clone https://gitlab.com/scripta/escriptorium.git
     python build_variables.env.py --ports "5555, 8080"
 
 - init: |
